@@ -1,16 +1,17 @@
 
-# Data for: "Alexa for the win. Electronic media usage and ideology in Brazil".
+# Data for: "Alexa for the win: Electronic media usage and ideology in Brazil".
 
 
-# Carregar pacotes necessários:
-require(plyr)
-require(dplyr)
-require(tidyverse)
-require(ggplot2)
-require(gridExtra)
-require(readxl)
+# Carregar ou instalar pacotes necessários:
+if(require(plyr)==F)install.packages('plyr');require(plyr)
+if(require(dplyr)==F)install.packages('dplyr');require(dplyr)
+if(require(readxl)==F)install.packages('readxl');require(readxl)
+if(require(ggplot2)==F)install.packages('ggplot2');require(ggplot2)
+if(require(tidyverse)==F)install.packages('tidyverse');require(tidyverse)
+if(require(gridExtra)==F)install.packages('gridExtra');require(gridExtra)
+
 # Carregar base de 2018 e filtrar por Brasil:
-setwd("C:/Users/Lessa/Desktop/Trab Final - OP")
+setwd("") # Defina diretório de trabalho
 base <- readRDS("Latinobarometro_2018_Esp_R_v20190303.rds")
 basebr <- filter(base, IDENPA == "76")
 
@@ -54,6 +55,7 @@ summary(mod2)
 
 ---
 
+
 # Terceiro modelo, adicionar satisfação com economia (P13STGBS.B), 
 # confiança no governo (P15STGBSC.E), na mídia (P16NC.D) e
 # apoio à democracia (P12STGBS):
@@ -70,6 +72,7 @@ mod3 <- glm(P19ST.G ~ P22ST + P13STGBS.B + P15STGBSC.E +
                  P16NC.D + P12STGBS + SEXO + S1 + S6 +
                  S10 + EDAD + S12M.D + S12M.E, data = base2018.3, family = binomial)
 summary(mod3)
+
 
 ---
   
@@ -104,7 +107,7 @@ summary(mod3)
 # P19ST.C = Não signif = Colegas de trabalho
 # P19ST.D = Não signif = Colegas de estudo
 # P19ST.E = Não signif = Radio
-# P19ST.F = Significante em 1 modelo = Jornais/revistas
+# P19ST.F = Signif em 1 modelo = Jornais/revistas
 # P19ST.H = Não signif = TV 
 # P19NC.I = Não signif = Facebook 
 # P19NC.J = Não signif = Twitter
@@ -208,7 +211,6 @@ count(brasilesq, S1 == 4) # Média baixa = 37.8%
 count(brasilesq, S1 == 5) # Baixa = 30.4%
 summary(brasilesq$S1) 
 
-
 # Religião centro:
 ev <- c(3,4,5)
 brasilcentro <- filter(base, P22ST == "5")
@@ -227,7 +229,6 @@ brasilesq <- filter(base, P22ST %in% esq)
 count(brasilesq, S5 == 1) # Católicos =  60.1%
 count(brasilesq, S5 %in% ev) # Evangélicos = 6.8%
 summary(brasilesq$S5) 
-
 
 # Praticantes de religião centro:
 prats <- c(1,2)
@@ -274,7 +275,7 @@ mod4 <- glm(P15ST.H ~ P19STC + S1 + S10 + edad + S14 + sexo,
 summary(mod4)
 
 # VD:
-# P15ST.H =
+# P15ST.H =  ¿Cómo se informa Ud. de los asuntos políticos? Medios electrónicos/internet.
 
 # VIs:
 # P19STC = Self-positioning in Left- Right scale
@@ -311,7 +312,7 @@ mod5 <- glm(P26STH ~ P17ST + S9 + S13 + S4 + edad + sexo, data = base2016,
 summary(mod5)
 
 # VD:
-# P26STH = ¿Como se informa Ud. de los asuntos polticos?. Medios electronicos/internet 
+# P26STH = ¿Como se informa Ud. de los asuntos polticos? Medios electronicos/internet. 
 
 # VIs:
 # P17ST = Self-positioning in Left - Right scale (0 a 10)
@@ -324,7 +325,7 @@ summary(mod5)
 ---  
   
 
-# Quantos usaram meios eletrônicos para informação sobre política 2016,2017,2018:
+# Quantos usaram meios eletrônicos para informação sobre política 2016,2017,2018 (nas bases filtradas):
 count(base2016, P26STH == 1) # 258 - 26,5%
 count(base2017, P15ST.H == 1) # 229 - 26,8%
 count(base2018, P19ST.G == 1) # 415 - 43,4%
@@ -351,11 +352,10 @@ mod6b <- glm(P19ST.F ~ P22ST + P13STGBS.B + P15STGBSC.E +
 summary(mod6b)
 
 
-# Nestes dois modelos, para checar se os achados são robustos e não dependem
-# do número de entrevistados de esquerda ou direita na amostra, foram separados
-# 2 grupos, com escores de 0 a 4 (esquerda = 404) e 6 a 10 (direita = 275). Os 
-# modelos apontam que a ideologia influencia a probabilidade de buscar informações
-# na internet para o grupo da direita, mas não é significativa no grupo da esquerda.
+# Nestes dois modelos foram separados 2 grupos, com escores de 0 a 4 (esquerda = 404) 
+# e 6 a 10 (direita = 275). Os modelos apontam que a ideologia influencia a probabilidade
+# de buscar informações na internet para o grupo da direita, mas não é significativa no grupo
+# da esquerda.
 
 # Filtrar base para direita:
 dir <- c(6,7,8,9,10)
