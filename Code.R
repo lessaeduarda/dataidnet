@@ -11,7 +11,7 @@ if(require(tidyverse)==F)install.packages('tidyverse');require(tidyverse)
 if(require(gridExtra)==F)install.packages('gridExtra');require(gridExtra)
 
 # Carregar base de 2018 e filtrar por Brasil:
-setwd("") # Defina diretório de trabalho
+setwd("") # !!!Defina diretório de trabalho!!!
 base <- readRDS("Latinobarometro_2018_Esp_R_v20190303.rds")
 basebr <- filter(base, IDENPA == "76")
 
@@ -352,8 +352,8 @@ mod6b <- glm(P19ST.F ~ P22ST + P13STGBS.B + P15STGBSC.E +
 summary(mod6b)
 
 
-# Nestes dois modelos foram separados 2 grupos, com escores de 0 a 4 (esquerda = 404) 
-# e 6 a 10 (direita = 275). Os modelos apontam que a ideologia influencia a probabilidade
+# Nestes dois modelos foram separados 2 grupos, com escores de 0 a 4 (esquerda, n = 404) 
+# e 6 a 10 (direita, n = 275). Os modelos apontam que a ideologia influencia a probabilidade
 # de buscar informações na internet para o grupo da direita, mas não é significativa no grupo
 # da esquerda.
 
